@@ -1,0 +1,239 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 252 94% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 254 65% 65%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 252 95% 85%;
+    --radius: 0.75rem;
+  }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 252 94% 67%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 254 65% 65%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 252 95% 85%;
+  }
+
+  * {
+    @apply border-border selection:bg-accent/10 selection:text-foreground;
+  }
+  
+  body {
+    @apply bg-background text-foreground antialiased overflow-x-hidden;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02", "cv03";
+  }
+
+  html {
+    @apply scroll-smooth;
+  }
+
+  .light .glass-morphism {
+    @apply backdrop-blur-xl bg-black/5 border border-black/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.1)];
+  }
+}
+
+@layer utilities {
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glass-morphism {
+    @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-[0_4px_12px_-2px_rgba(0,0,0,0.3)];
+  }
+  
+  .neo-blur {
+    @apply backdrop-blur-2xl bg-black/40 border border-white/10;
+  }
+  
+  .code-gradient {
+    @apply bg-gradient-to-br from-codemate-purple to-codemate-blue;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-br from-codemate-purple via-codemate-purple-light to-codemate-blue-light bg-clip-text text-transparent;
+  }
+
+  .light .gradient-text {
+    @apply bg-gradient-to-br from-codemate-purple via-codemate-purple to-codemate-blue bg-clip-text text-transparent;
+  }
+  
+  .gradient-button {
+    @apply relative overflow-hidden transition-all duration-300 ease-out;
+  }
+  
+  .gradient-button::before {
+    @apply content-[''] absolute top-0 left-0 w-full h-full bg-gradient-to-r from-codemate-purple to-codemate-blue opacity-0 transition-opacity duration-300 ease-out;
+  }
+  
+  .gradient-button:hover::before {
+    @apply opacity-100;
+  }
+  
+  .gradient-border {
+    @apply relative border border-transparent;
+    background-image: linear-gradient(#121212, #121212), 
+                      linear-gradient(to right, #8B5CF6, #2563EB);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  /* Jira-like drag and drop styles */
+  .dragging {
+    @apply !z-[9999] !shadow-2xl;
+  }
+  
+  .task-card.dragging {
+    @apply !z-[9999] opacity-90 scale-[1.02];
+    transform-origin: center center !important;
+    cursor: grabbing !important;
+    pointer-events: none !important;
+  }
+  
+  /* Make sure all draggable elements have the right cursor */
+  [data-rbd-draggable-id] {
+    cursor: grab;
+  }
+  
+  /* When actually dragging */
+  [data-rbd-draggable-id][data-rbd-dragging="true"] {
+    @apply !z-[9999] pointer-events-none;
+    cursor: grabbing !important;
+  }
+  
+  /* Ensure drag portal and handle are on top */
+  div[data-rbd-drag-handle-context-id] {
+    @apply !z-[9999];
+  }
+  
+  /* Core positioning fixes for drag contexts */
+  div[data-rbd-draggable-context-id] {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Most importantly - the drag portal must be above everything */
+  div[data-rbd-portal] {
+    @apply !z-[9999] fixed;
+    pointer-events: none;
+  }
+  
+  /* Prevent z-index stacking context issues by setting explicit z-index on columns */
+  .kanban-column {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Code editor styles */
+  .cm-editor {
+    @apply !bg-codemate-darker text-white font-mono text-sm rounded-md;
+  }
+  
+  .cm-line {
+    @apply leading-6;
+  }
+  
+  .cm-activeLineGutter {
+    @apply !bg-white/5;
+  }
+  
+  .cm-activeLine {
+    @apply !bg-white/5;
+  }
+  
+  .cm-gutters {
+    @apply !bg-codemate-darker !border-r !border-white/10;
+  }
+
+  /* Syntax highlighting classes */
+  .code-keyword {
+    @apply text-[#9b87f5];
+  }
+  
+  .code-string {
+    @apply text-[#FEF7CD];
+  }
+  
+  .code-comment {
+    @apply text-[#8E9196];
+  }
+  
+  .code-function {
+    @apply text-[#D3E4FD];
+  }
+  
+  .code-constant {
+    @apply text-[#F97316];
+  }
+  
+  .code-variable {
+    @apply text-[#E5DEFF];
+  }
+  
+  .code-type {
+    @apply text-[#0EA5E9];
+  }
+  
+  .code-property {
+    @apply text-[#D946EF];
+  }
+
+  /* Demo carousel styling */
+  .demo-dot {
+    @apply w-2 h-2 rounded-full bg-white/20 transition-all;
+  }
+
+  .demo-dot.active {
+    @apply w-4 bg-white;
+  }
+
+  .light .demo-dot {
+    @apply bg-black/20;
+  }
+
+  .light .demo-dot.active {
+    @apply bg-black;
+  }
+
+  .demo-section {
+    @apply min-h-screen flex items-center justify-center;
+  }
+}
